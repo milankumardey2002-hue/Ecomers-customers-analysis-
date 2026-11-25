@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E-Commerce Customer Analytics – Sec D</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>🛒 E-Commerce Customer Analytics</h1>
+  <p>Sec D · Data Science &amp; Machine Learning project — runs entirely in your browser</p>
+</header>
+<nav id="tabs">
+  <button data-tab="data" class="on">1 · Data &amp; Preprocessing</button>
+  <button data-tab="analysis">2 · Analysis</button>
+  <button data-tab="models">3 · ML Models</button>
+  <button data-tab="opt">4 · Optimization</button>
+  <button data-tab="predict">5 · Results / Predictor</button>
+</nav>
+<main>
+  <section id="t-data">
+    <div class="card"><h2>Collect Data</h2>
+      <p>Simulated store data: customer details, product information, purchase history, browsing activity and ratings (600 customers, 12 products, 6 categories). Noise is added on purpose (missing values, duplicates, outliers) so preprocessing has real work to do.</p>
+      <div class="row"><label>Random seed <input id="seed" type="number" value="42"></label><button id="regen">Regenerate dataset</button><button id="dl" class="alt">Download cleaned CSV</button></div></div>
+    <div id="cards" class="grid4"></div>
+    <div class="card"><h2>Preprocess Data</h2><ul id="steps"></ul></div>
+    <div class="card"><h2>Cleaned data (first 12 rows)</h2><div class="scroll"><table id="preview"></table></div></div>
+  </section>
+
+  <section id="t-analysis" hidden>
+    <div class="grid2">
+      <div class="card"><h3>Revenue by category (₹)</h3><canvas id="cRev"></canvas></div>
+      <div class="card"><h3>Most popular products (purchases)</h3><canvas id="cTop"></canvas></div>
+      <div class="card"><h3>Monthly sales trend (₹ lakh, simulated seasonality)</h3><canvas id="cMonth"></canvas></div>
+      <div class="card"><h3>Distribution of customer spending</h3><canvas id="cHist"></canvas></div>
+      <div class="card"><h3>Correlation of each feature with spending</h3><canvas id="cCorr"></canvas></div>
+      <div class="card"><h3>Average spend by age group (₹)</h3><canvas id="cAge"></canvas></div>
+    </div>
+    <div class="card"><h2>Key insights</h2><ul id="insights"></ul></div>
+  </section>
+
+  <section id="t-models" hidden>
+    <div class="grid2">
+      <div class="card"><h2>Linear Regression</h2><p class="sub">Predicts future customer spending (ridge-regularised, normal equation).</p><div id="linM" class="grid3"></div><h3>Predicted vs actual spend (test set)</h3><canvas id="cPred"></canvas></div>
+      <div class="card"><h2>Logistic Regression</h2><p class="sub">Predicts whether a customer is likely to purchase (gradient descent).</p><div id="logM" class="grid3"></div><h3>Confusion matrix (test set)</h3><div id="conf"></div></div>
+      <div class="card"><h2>K-Means Clustering</h2><p class="sub">Segments customers (k = 3) using spend, visits, past orders and income.</p><table id="segT"></table><h3>Spend vs visits by segment</h3><canvas id="cSeg"></canvas></div>
+      <div class="card"><h2>KNN Recommender</h2><p class="sub">Finds customers with similar category tastes and recommends products they bought (the target has not).</p><div id="knnM" class="grid3"></div><h3>Top-3 hit rate by k</h3><canvas id="cKnn"></canvas></div>
+    </div>
+  </section>
+
+  <section id="t-opt" hidden>
+    <div class="card"><h2>Optimize the Model</h2><p>Hyper-parameters are tuned with <b>5-fold cross-validation</b> on the training set; the test set is only used for the final scores.</p><table id="optT"></table></div>
+    <div class="grid2">
+      <div class="card"><h3>Ridge λ vs CV RMSE (lower is better)</h3><canvas id="cLam"></canvas></div>
+      <div class="card"><h3>Learning rate vs CV accuracy (higher is better)</h3><canvas id="cLr"></canvas></div>
+      <div class="card"><h3>Elbow curve for K-Means (inertia)</h3><canvas id="cElb"></canvas></div>
+      <div class="card"><h3>KNN: choosing k (recommendation hit rate)</h3><canvas id="cKnn2"></canvas></div>
+    </div>
+  </section>
+
+  <section id="t-predict" hidden>
+    <div class="grid2">
+      <div class="card"><h2>Customer profile</h2>
+        <div class="row"><label>Load existing customer <select id="load"></select></label></div>
+        <div id="form" class="grid3"></div>
+        <h3>Product categories of interest</h3><div id="cats" class="chips"></div>
+        <button id="go">Predict</button></div>
+      <div class="card"><h2>Display Results</h2><div id="out" class="sub">Fill the profile and press <b>Predict</b>.</div></div>
+    </div>
+    <div class="card"><h2>Final Output</h2><ul><li>Predicted customer spending (Linear Regression)</li><li>Purchase probability for customers (Logistic Regression)</li><li>Customer segmentation – Premium, Regular, Occasional (K-Means)</li><li>Personalised product recommendations (KNN)</li></ul></div>
+  </section>
+</main>
+<footer>Built with plain HTML, CSS and JavaScript — no server, no libraries. Data is synthetic.</footer>
+<script src="js/core.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>
